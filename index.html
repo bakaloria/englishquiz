@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار اللغة الإنجليزية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap' );
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap' );
+
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f0f4f8;
+            --container-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --error-color: #e74c3c;
+            --success-color: #27ae60;
+            --hover-light: #f0f8ff;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Poppins', Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            border: 8px solid transparent;
+            border-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color)) 1;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        button {
+            background: linear-gradient(45deg, var(--primary-color), #5dade2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        input[type="text"], select {
+            padding: 12px;
+            width: 100%;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Tajawal', sans-serif;
+            text-align: right;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #fdfdfd;
+        }
+        .question h4 {
+            font-family: 'Poppins', 'Tajawal', sans-serif;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .options label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            font-family: 'Poppins', 'Tajawal', sans-serif;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .options label:hover {
+            background-color: var(--hover-light);
+            border-color: var(--primary-color);
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .text-content {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-family: 'Poppins', sans-serif;
+            direction: ltr;
+            text-align: left;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .progress {
+            margin-bottom: 20px;
+            height: 12px;
+            background-color: #ecf0f1;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, var(--secondary-color), #58d68d);
+            width: 0%;
+            transition: width 0.4s ease-in-out;
+        }
+
+        .tracking {
+            text-align: left;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .result-score {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--success-color);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .summary-item, .correction-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .correction-item {
+            border-left-color: var(--error-color);
+        }
+        .correction-item .user-answer {
+            color: var(--error-color);
+            text-decoration: line-through;
+        }
+        .correction-item .correct-answer {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+        .correction-item p {
+            margin: 5px 0;
+            font-family: 'Poppins', sans-serif;
+            direction: ltr;
+            text-align: left;
+        }
+        .correction-item .icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcome-section" class="section active">
+        <h1>اختبار تحديد المستوى في اللغة الإنجليزية</h1>
+        <p>مرحباً بك! الرجاء إدخال اسمك واختيار المسار لبدء الاختبار.</p>
+        <input type="text" id="student-name" placeholder="الاسم الكامل">
+        <select id="track-select">
+            <option value="">اختر مسارك الدراسي</option>
+            <option value="scientific">المسار العلمي</option>
+            <option value="literary">المسار الأدبي</option>
+        </select>
+        <button id="start-test">بدء الاختبار</button>
+    </div>
+
+    <div id="loading-section" class="section">
+        <div class="loading">
+            <h2>جاري تحضير أسئلة الاختبار...</h2>
+            <p>لحظات من فضلك، نقوم بإعداد تجربة اختبار مخصصة لك.</p>
+        </div>
+    </div>
+
+    <div id="error-section" class="section">
+        <div class="error">
+            <h2>حدث خطأ</h2>
+            <p id="error-message"></p>
+            <button id="retry-loading">إعادة المحاولة</button>
+        </div>
+    </div>
+
+    <div id="text-section" class="section">
+        <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+        <div class="tracking" id="tracking">السؤال <span id="current-question">1</span> من <span id="total-questions">0</span></div>
+        <div id="text-content" class="text-content"></div>
+        <div id="text-questions-container"></div>
+        <button id="next-text-questions" disabled>الانتقال للقسم التالي</button>
+    </div>
+
+    <div id="multiple-section" class="section">
+        <div class="progress"><div class="progress-bar" id="progress-bar-multiple"></div></div>
+        <div class="tracking" id="tracking-multiple">السؤال <span id="current-question-multiple">1</span> إلى <span id="current-question-end">4</span> من <span id="total-questions-multiple">0</span></div>
+        <div id="multiple-questions-container"></div>
+        <button id="next-multiple-questions" disabled>الصفحة التالية</button>
+        <button id="finish-test" disabled>إنهاء الاختبار وعرض النتيجة</button>
+    </div>
+
+    <div id="results-section" class="section">
+        <h1>النتيجة النهائية</h1>
+        <p id="student-result"></p>
+        <div class="result-score" id="score-percentage"></div>
+        <div id="score-display"></div>
+        <div id="corrections-container"></div>
+        <button id="restart-test">إعادة الاختبار</button>
+    </div>
+
+    <script>
+        // Global variables
+        let studentName = '';
+        let track = '';
+        let answers = {}; // Stores { 'q-id': { answerIndex: number, answerText: string } }
+        let textData = [];
+        let multipleData = [];
+        let questionsPerPage = 4;
+        let totalTextQuestions = 7;
+        let totalMultipleQuestions = 16;
+        let selectedTextQuestions = [];
+        let selectedMultipleQuestions = [];
+        let currentMultiplePage = 0;
+        let wrongAnswers = [];
+
+        // Google Sheets configuration
+        const SHEET_ID = '1j8ycHB-MVbNl8XaYhGkgW86wXsnwmyzf-JkwCs9FzUE';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzA9GYrHeOZfO6SoHCVilYc5zKYfyYdVFAffN8B0jwVS4RWqCp4p2uSmCfj5exy42SPNA/exec';
+
+        // DOM elements
+        const welcomeSection = document.getElementById('welcome-section' );
+        const loadingSection = document.getElementById('loading-section');
+        const errorSection = document.getElementById('error-section');
+        const textSection = document.getElementById('text-section');
+        const multipleSection = document.getElementById('multiple-section');
+        const resultsSection = document.getElementById('results-section');
+        const startTestBtn = document.getElementById('start-test');
+        const nextTextQuestionsBtn = document.getElementById('next-text-questions');
+        const nextMultipleQuestionsBtn = document.getElementById('next-multiple-questions');
+        const finishTestBtn = document.getElementById('finish-test');
+        const restartTestBtn = document.getElementById('restart-test');
+        const retryLoadingBtn = document.getElementById('retry-loading');
+        const studentNameInput = document.getElementById('student-name');
+        const trackSelect = document.getElementById('track-select');
+        const textContentDiv = document.getElementById('text-content');
+        const textQuestionsContainer = document.getElementById('text-questions-container');
+        const multipleQuestionsContainer = document.getElementById('multiple-questions-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressBarMultiple = document.getElementById('progress-bar-multiple');
+        const totalQuestionsSpan = document.getElementById('total-questions');
+        const totalQuestionsMultipleSpan = document.getElementById('total-questions-multiple');
+        const currentQuestionSpan = document.getElementById('current-question');
+        const currentQuestionMultipleSpan = document.getElementById('current-question-multiple');
+        const currentQuestionEndSpan = document.getElementById('current-question-end');
+        const studentResultP = document.getElementById('student-result');
+        const scorePercentageDiv = document.getElementById('score-percentage');
+        const scoreDisplayDiv = document.getElementById('score-display');
+        const errorMessageP = document.getElementById('error-message');
+        const correctionsContainer = document.getElementById('corrections-container');
+
+        // Event listeners
+        startTestBtn.addEventListener('click', startTest);
+        nextTextQuestionsBtn.addEventListener('click', () => showSection(multipleSection, textSection, showMultipleQuestions));
+        nextMultipleQuestionsBtn.addEventListener('click', showNextMultipleQuestions);
+        finishTestBtn.addEventListener('click', () => showSection(resultsSection, multipleSection, showResults));
+        restartTestBtn.addEventListener('click', restartTest);
+        retryLoadingBtn.addEventListener('click', startTest);
+
+        function showSection(targetSection, currentSection = null, callback = null) {
+            if (currentSection) currentSection.classList.remove('active');
+            targetSection.classList.add('active');
+            if (callback) callback();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function getRandomSubset(array, count) {
+            return shuffleArray([...array]).slice(0, count);
+        }
+
+        async function loadDataFromGoogleScript(sheetName) {
+            const url = `${GOOGLE_SCRIPT_URL}?sheetId=${SHEET_ID}&sheetName=${sheetName}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`خطأ في الاتصال: ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+                throw error;
+            }
+        }
+
+        function processTextData(jsonData) {
+            const textsMap = new Map();
+            jsonData.forEach(row => {
+                if (row.text && row.text.trim()) {
+                    const textContent = row.text.trim();
+                    if (!textsMap.has(textContent)) {
+                        textsMap.set(textContent, { text: textContent, questions: [] });
+                    }
+                    if (row.question && row.question.trim()) {
+                        const options = [row.option1, row.option2, row.option3, row.option4, row.option5].filter(opt => opt && opt.trim());
+                        textsMap.get(textContent).questions.push({ question: row.question.trim(), options, correctAnswer: row.correctanswer });
+                    }
+                }
+            });
+            return Array.from(textsMap.values());
+        }
+
+        function processMultipleData(jsonData) {
+            return jsonData.map(row => ({
+                question: row.question,
+                options: [row.option1, row.option2, row.option3, row.option4, row.option5].filter(opt => opt && opt.trim()),
+                correctAnswer: row.correctanswer
+            }));
+        }
+
+        async function startTest() {
+            studentName = studentNameInput.value.trim();
+            track = trackSelect.value;
+            if (!studentName || !track) {
+                alert('الرجاء إدخال الاسم واختيار المسار.');
+                return;
+            }
+            showSection(loadingSection, welcomeSection);
+            errorSection.classList.remove('active');
+
+            try {
+                if (track === 'scientific') {
+                    totalTextQuestions = 7;
+                    questionsPerPage = 4;
+                    totalMultipleQuestions = 16;
+                } else {
+                    totalTextQuestions = 5;
+                    questionsPerPage = 5;
+                    totalMultipleQuestions = 35;
+                }
+
+                const [textsJSON, multipleJSON] = await Promise.all([
+                    loadDataFromGoogleScript('texts'),
+                    loadDataFromGoogleScript('multiple')
+                ]);
+
+                textData = processTextData(textsJSON);
+                multipleData = processMultipleData(multipleJSON);
+
+                const suitableTexts = textData.filter(text => text.questions.length >= totalTextQuestions);
+                if (suitableTexts.length === 0) throw new Error(`لا توجد نصوص تحتوي على ${totalTextQuestions} أسئلة.`);
+                
+                const selectedText = suitableTexts[Math.floor(Math.random() * suitableTexts.length)];
+                selectedTextQuestions = getRandomSubset(selectedText.questions, totalTextQuestions);
+                selectedMultipleQuestions = getRandomSubset(multipleData, totalMultipleQuestions);
+
+                showSection(textSection, loadingSection, showTextQuestions);
+            } catch (error) {
+                errorMessageP.textContent = error.message || 'فشل تحميل أسئلة الاختبار.';
+                showSection(errorSection, loadingSection);
+            }
+        }
+
+        function showTextQuestions() {
+            const selectedText = textData.find(text => text.questions.some(q => selectedTextQuestions.includes(q)));
+            textContentDiv.innerHTML = `<h3 class="passage-title">Reading Passage:</h3><p>${selectedText.text}</p>`;
+            textQuestionsContainer.innerHTML = '';
+            totalQuestionsSpan.textContent = selectedTextQuestions.length;
+
+            selectedTextQuestions.forEach((q, index) => {
+                const questionDiv = createQuestionElement(`text-q${index}`, q, index + 1);
+                textQuestionsContainer.appendChild(questionDiv);
+            });
+            updateProgressBar(progressBar, 0);
+            checkTextQuestionsCompletion();
+        }
+
+        function createQuestionElement(idPrefix, q, displayIndex) {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `<h4>Question ${displayIndex}: ${q.question}</h4><div class="options" id="${idPrefix}"></div>`;
+            const optionsDiv = questionDiv.querySelector('.options');
+            const shuffledOptions = shuffleArray([...q.options]);
+
+            shuffledOptions.forEach((option, optIndex) => {
+                optionsDiv.innerHTML += `
+                    <label>
+                        <input type="radio" name="${idPrefix}" value="${option}" data-question-id="${idPrefix}" data-option-index="${optIndex}">
+                        ${option}
+                    </label>
+                `;
+            });
+
+            optionsDiv.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    answers[e.target.dataset.questionId] = {
+                        answerIndex: parseInt(e.target.dataset.optionIndex, 10),
+                        answerText: e.target.value
+                    };
+                    if (idPrefix.startsWith('text')) checkTextQuestionsCompletion();
+                    else checkMultipleQuestionsCompletion();
+                });
+            });
+            return questionDiv;
+        }
+
+        function checkTextQuestionsCompletion() {
+            const answeredCount = Object.keys(answers).filter(k => k.startsWith('text-q')).length;
+            nextTextQuestionsBtn.disabled = answeredCount !== selectedTextQuestions.length;
+            updateProgressBar(progressBar, (answeredCount / selectedTextQuestions.length) * 100);
+            currentQuestionSpan.textContent = Math.min(answeredCount + 1, selectedTextQuestions.length);
+        }
+
+        function showMultipleQuestions() {
+            currentMultiplePage = 0;
+            showMultipleQuestionsPage();
+        }
+
+        function showMultipleQuestionsPage() {
+            const startIndex = currentMultiplePage * questionsPerPage;
+            const endIndex = Math.min(startIndex + questionsPerPage, selectedMultipleQuestions.length);
+            multipleQuestionsContainer.innerHTML = '';
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const q = selectedMultipleQuestions[i];
+                const questionDiv = createQuestionElement(`multi-q${i}`, q, i + 1);
+                multipleQuestionsContainer.appendChild(questionDiv);
+                if (answers[`multi-q${i}`]) {
+                    const selected = questionDiv.querySelector(`input[value="${CSS.escape(answers[`multi-q${i}`].answerText)}"]`);
+                    if (selected) selected.checked = true;
+                }
+            }
+
+            totalQuestionsMultipleSpan.textContent = selectedMultipleQuestions.length;
+            currentQuestionMultipleSpan.textContent = startIndex + 1;
+            currentQuestionEndSpan.textContent = endIndex;
+            
+            const isLastPage = currentMultiplePage >= Math.ceil(selectedMultipleQuestions.length / questionsPerPage) - 1;
+            nextMultipleQuestionsBtn.style.display = isLastPage ? 'none' : 'block';
+            finishTestBtn.style.display = isLastPage ? 'block' : 'none';
+
+            checkMultipleQuestionsCompletion();
+        }
+
+        function showNextMultipleQuestions() {
+            currentMultiplePage++;
+            showMultipleQuestionsPage();
+        }
+
+        function checkMultipleQuestionsCompletion() {
+            const answeredCount = Object.keys(answers).filter(k => k.startsWith('multi-q')).length;
+            updateProgressBar(progressBarMultiple, (answeredCount / selectedMultipleQuestions.length) * 100);
+
+            const startIndex = currentMultiplePage * questionsPerPage;
+            const endIndex = Math.min(startIndex + questionsPerPage, selectedMultipleQuestions.length);
+            const currentPageAnswered = Array.from({ length: endIndex - startIndex }, (_, i) => `multi-q${startIndex + i}`).every(qId => answers[qId]);
+            
+            nextMultipleQuestionsBtn.disabled = !currentPageAnswered;
+            finishTestBtn.disabled = answeredCount !== selectedMultipleQuestions.length;
+        }
+
+        function updateProgressBar(barElement, percentage) {
+            barElement.style.width = `${percentage}%`;
+        }
+
+        function showResults() {
+            let correctCount = 0;
+            wrongAnswers = [];
+
+            const checkAnswer = (q, userAnswerData) => {
+                if (!userAnswerData) return false;
+                // The correct answer from Sheets is 1-based, user answer index is 0-based.
+                const correctIndex = parseInt(q.correctAnswer, 10) - 1;
+                // Find the text of the correct answer from the original options list
+                const correctAnswerText = q.options[correctIndex];
+                // Compare the text of the user's answer with the text of the correct answer.
+                return userAnswerData.answerText === correctAnswerText;
+            };
+            
+            const getCorrectAnswerText = (q) => {
+                 const correctIndex = parseInt(q.correctAnswer, 10) - 1;
+                 return q.options[correctIndex] || "إجابة غير محددة";
+            }
+
+            selectedTextQuestions.forEach((q, index) => {
+                const userAnswerData = answers[`text-q${index}`];
+                if (checkAnswer(q, userAnswerData)) {
+                    correctCount++;
+                } else {
+                    wrongAnswers.push({ ...q, userAnswer: userAnswerData ? userAnswerData.answerText : "لم تتم الإجابة" });
+                }
+            });
+
+            selectedMultipleQuestions.forEach((q, index) => {
+                const userAnswerData = answers[`multi-q${index}`];
+                if (checkAnswer(q, userAnswerData)) {
+                    correctCount++;
+                } else {
+                    wrongAnswers.push({ ...q, userAnswer: userAnswerData ? userAnswerData.answerText : "لم تتم الإجابة" });
+                }
+            });
+
+            const totalQuestions = selectedTextQuestions.length + selectedMultipleQuestions.length;
+            const percentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+
+            studentResultP.textContent = `تهانينا ${studentName}! لقد أكملت الاختبار.`;
+            scorePercentageDiv.textContent = `${percentage}%`;
+            scoreDisplayDiv.innerHTML = `
+                <div class="summary-item"><span><strong>النتيجة:</strong></span><span>${correctCount} / ${totalQuestions}</span></div>
+                <div class="summary-item"><span><strong>المسار:</strong></span><span>${track === 'scientific' ? 'علمي' : 'أدبي'}</span></div>
+            `;
+
+            displayCorrections(getCorrectAnswerText);
+            sendTelegramReport(correctCount, totalQuestions, percentage, getCorrectAnswerText);
+        }
+
+        function displayCorrections(getCorrectAnswerText) {
+            correctionsContainer.innerHTML = '';
+            if (wrongAnswers.length > 0) {
+                let correctionsHTML = '<h3>تصحيح الأخطاء:</h3>';
+                wrongAnswers.forEach(q => {
+                    correctionsHTML += `
+                        <div class="correction-item">
+                            <p><strong>السؤال:</strong> ${q.question}</p>
+                            <p><span class="icon">❌</span> <span class="user-answer">إجابتك: ${q.userAnswer}</span></p>
+                            <p><span class="icon">✔️</span> <span class="correct-answer">الإجابة الصحيحة: ${getCorrectAnswerText(q)}</span></p>
+                        </div>
+                    `;
+                });
+                correctionsContainer.innerHTML = correctionsHTML;
+            }
+        }
+
+        async function sendTelegramReport(correctCount, totalQuestions, percentage, getCorrectAnswerText) {
+            const botToken = '8138541482:AAEMwUnhx_pHI1PxZn6oVS-naNp4jiL08TQ'; // <-- ضع توكن البوت هنا
+            const chatId = '-1001722914216'; // <-- ضع معرف الدردشة هنا
+
+            let correctionsText = wrongAnswers.map((q, i) => 
+                `${i + 1}. السؤال: ${q.question}\n` +
+                `   - إجابتك: ${q.userAnswer}\n` +
+                `   - الصحيحة: ${getCorrectAnswerText(q)}`
+            ).join('\n\n');
+            
+            if (correctionsText.length === 0) {
+                correctionsText = "لا توجد أخطاء، عمل رائع!";
+            }
+
+            const message = `
+*تقرير اختبار جديد* 📝
+------------------------------------
+*الاسم:* ${studentName}
+*المسار:* ${track === 'scientific' ? 'علمي' : 'أدبي'}
+*تاريخ الاختبار:* ${new Date().toLocaleString('ar-EG')}
+------------------------------------
+*النتيجة النهائية:*
+- *الدرجة:* ${correctCount} من ${totalQuestions}
+- *النسبة المئوية:* ${percentage}%
+------------------------------------
+*ملخص الأخطاء:*
+${correctionsText}
+            `;
+
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    } )
+                });
+            } catch (error) {
+                console.error('فشل إرسال تقرير تليجرام:', error);
+            }
+        }
+
+        function restartTest() {
+            studentName = '';
+            track = '';
+            answers = {};
+            wrongAnswers = [];
+            selectedTextQuestions = [];
+            selectedMultipleQuestions = [];
+            studentNameInput.value = '';
+            trackSelect.value = '';
+            showSection(welcomeSection, resultsSection);
+        }
+    </script>
+</body>
+</html>
