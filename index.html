@@ -2,12 +2,95 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>اختبار اللغة الإنجليزية</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap' );
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap' );
+        /* تحسينات للجوال */
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Tajawal', 'Poppins', Arial, sans-serif;
+            max-width: 100%;
+            margin: 0;
+            padding: 15px;
+            background-color: #f0f4f8;
+            color: #333;
+            border: none;
+            box-shadow: none;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        .section {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            display: none;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #3498db, #5dade2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 8px 0;
+            width: 100%;
+            touch-action: manipulation;
+        }
+        
+        .options label {
+            padding: 10px;
+            font-size: 15px;
+        }
+        
+        .question {
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .text-content {
+            padding: 15px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        /* تحسينات للشاشات الصغيرة */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            h2 {
+                font-size: 18px;
+            }
+            
+            button {
+                padding: 10px 15px;
+                font-size: 15px;
+            }
+        }
 
+        /* بقية التنسيقات كما هي */
         :root {
             --primary-color: #3498db;
             --secondary-color: #2ecc71;
@@ -20,27 +103,6 @@
             --hover-light: #f0f8ff;
         }
 
-        body {
-            font-family: 'Tajawal', 'Poppins', Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            border: 8px solid transparent;
-            border-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color)) 1;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .section {
-            background-color: var(--container-bg);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 20px;
-            display: none;
-        }
-
         .active {
             display: block;
         }
@@ -51,22 +113,9 @@
             font-family: 'Tajawal', sans-serif;
         }
 
-        button {
-            background: linear-gradient(45deg, var(--primary-color), #5dade2);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-        }
-
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
 
         button:disabled {
@@ -74,6 +123,7 @@
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+            opacity: 0.7;
         }
 
         input[type="text"], select {
@@ -87,29 +137,23 @@
             font-size: 16px;
             transition: border-color 0.3s;
         }
+
         input[type="text"]:focus, select:focus {
             border-color: var(--primary-color);
             outline: none;
         }
 
-        .question {
-            margin-bottom: 25px;
-            padding: 20px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background-color: #fdfdfd;
-        }
         .question h4 {
             font-family: 'Poppins', 'Tajawal', sans-serif;
             direction: ltr;
             text-align: left;
+            margin-top: 0;
         }
 
         .options label {
             display: block;
             margin: 8px 0;
             cursor: pointer;
-            padding: 12px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
@@ -122,25 +166,14 @@
             background-color: var(--hover-light);
             border-color: var(--primary-color);
         }
+
         .options input[type="radio"] {
             margin-right: 10px;
         }
 
-        .text-content {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            line-height: 1.8;
-            font-family: 'Poppins', sans-serif;
-            direction: ltr;
-            text-align: left;
-            border-left: 4px solid var(--primary-color);
-        }
-
         .progress {
-            margin-bottom: 20px;
-            height: 12px;
+            margin-bottom: 15px;
+            height: 10px;
             background-color: #ecf0f1;
             border-radius: 6px;
             overflow: hidden;
@@ -157,49 +190,67 @@
             text-align: left;
             color: #7f8c8d;
             font-size: 14px;
+            margin-bottom: 10px;
         }
 
         .result-score {
-            font-size: 48px;
+            font-size: 36px;
             font-weight: bold;
             color: var(--success-color);
             text-align: center;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .summary-item, .correction-item {
             background-color: #f8f9fa;
-            padding: 15px;
+            padding: 12px;
             margin: 8px 0;
             border-radius: 8px;
             border-left: 4px solid var(--primary-color);
         }
+
         .correction-item {
             border-left-color: var(--error-color);
         }
+
         .correction-item .user-answer {
             color: var(--error-color);
             text-decoration: line-through;
         }
+
         .correction-item .correct-answer {
             color: var(--success-color);
             font-weight: bold;
         }
+
         .correction-item p {
             margin: 5px 0;
             font-family: 'Poppins', sans-serif;
             direction: ltr;
             text-align: left;
+            font-size: 14px;
         }
+
         .correction-item .icon {
             margin-right: 8px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .button-group button {
+            flex: 1;
         }
     </style>
 </head>
 <body>
+    <!-- قسم الترحيب -->
     <div id="welcome-section" class="section active">
-        <h1>اختبار مادة اللغة الإنكليزية لطلاب البكالوريا للقسم العلمي والأدبي</h1>
-            <h2>نماذج امتحانية وفق نمط االامتحان الوزاري</h2>
+        <h1>اختبار اللغة الإنجليزية</h1>
+        <h2>طلاب البكالوريا - القسم العلمي والأدبي</h2>
         <p>مرحباً بك! الرجاء إدخال اسمك واختيار المسار لبدء الاختبار.</p>
         <input type="text" id="student-name" placeholder="الاسم الكامل">
         <select id="track-select">
@@ -210,6 +261,7 @@
         <button id="start-test">بدء الاختبار</button>
     </div>
 
+    <!-- قسم التحميل -->
     <div id="loading-section" class="section">
         <div class="loading">
             <h2>جاري تحضير أسئلة الاختبار...</h2>
@@ -217,6 +269,7 @@
         </div>
     </div>
 
+    <!-- قسم الخطأ -->
     <div id="error-section" class="section">
         <div class="error">
             <h2>حدث خطأ</h2>
@@ -225,6 +278,7 @@
         </div>
     </div>
 
+    <!-- قسم الأسئلة النصية -->
     <div id="text-section" class="section">
         <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
         <div class="tracking" id="tracking">السؤال <span id="current-question">1</span> من <span id="total-questions">0</span></div>
@@ -233,14 +287,18 @@
         <button id="next-text-questions" disabled>الانتقال للقسم التالي</button>
     </div>
 
+    <!-- قسم الأسئلة المتعددة -->
     <div id="multiple-section" class="section">
         <div class="progress"><div class="progress-bar" id="progress-bar-multiple"></div></div>
         <div class="tracking" id="tracking-multiple">السؤال <span id="current-question-multiple">1</span> إلى <span id="current-question-end">4</span> من <span id="total-questions-multiple">0</span></div>
         <div id="multiple-questions-container"></div>
-        <button id="next-multiple-questions" disabled>الصفحة التالية</button>
-        <button id="finish-test" disabled>إنهاء الاختبار وعرض النتيجة</button>
+        <div class="button-group">
+            <button id="next-multiple-questions" disabled>الصفحة التالية</button>
+            <button id="finish-test" disabled>إنهاء الاختبار</button>
+        </div>
     </div>
 
+    <!-- قسم النتائج -->
     <div id="results-section" class="section">
         <h1>النتيجة النهائية</h1>
         <p id="student-result"></p>
@@ -251,26 +309,26 @@
     </div>
 
     <script>
-        // Global variables
+        // المتغيرات العامة
         let studentName = '';
         let track = '';
-        let answers = {}; // Stores { 'q-id': { answerIndex: number, answerText: string } }
+        let answers = {};
         let textData = [];
         let multipleData = [];
         let questionsPerPage = 4;
         let totalTextQuestions = 7;
-        let totalMultipleQuestions = 16;
+        let totalMultipleQuestions = 18; // تم زيادة الأسئلة من 16 إلى 18 للقسم العلمي
         let selectedTextQuestions = [];
         let selectedMultipleQuestions = [];
         let currentMultiplePage = 0;
         let wrongAnswers = [];
 
-        // Google Sheets configuration
+        // إعدادات جوجل شيتس
         const SHEET_ID = '1j8ycHB-MVbNl8XaYhGkgW86wXsnwmyzf-JkwCs9FzUE';
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzA9GYrHeOZfO6SoHCVilYc5zKYfyYdVFAffN8B0jwVS4RWqCp4p2uSmCfj5exy42SPNA/exec';
 
-        // DOM elements
-        const welcomeSection = document.getElementById('welcome-section' );
+        // عناصر DOM
+        const welcomeSection = document.getElementById('welcome-section');
         const loadingSection = document.getElementById('loading-section');
         const errorSection = document.getElementById('error-section');
         const textSection = document.getElementById('text-section');
@@ -300,7 +358,7 @@
         const errorMessageP = document.getElementById('error-message');
         const correctionsContainer = document.getElementById('corrections-container');
 
-        // Event listeners
+        // مستمعي الأحداث
         startTestBtn.addEventListener('click', startTest);
         nextTextQuestionsBtn.addEventListener('click', () => showSection(multipleSection, textSection, showMultipleQuestions));
         nextMultipleQuestionsBtn.addEventListener('click', showNextMultipleQuestions);
@@ -308,12 +366,17 @@
         restartTestBtn.addEventListener('click', restartTest);
         retryLoadingBtn.addEventListener('click', startTest);
 
+        // إظهار قسم معين وإخفاء الآخر
         function showSection(targetSection, currentSection = null, callback = null) {
             if (currentSection) currentSection.classList.remove('active');
             targetSection.classList.add('active');
             if (callback) callback();
+            
+            // التمرير لأعلى الصفحة بعد الانتقال
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // خلط المصفوفة عشوائياً
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -322,10 +385,12 @@
             return array;
         }
 
+        // اختيار مجموعة عشوائية من الأسئلة
         function getRandomSubset(array, count) {
             return shuffleArray([...array]).slice(0, count);
         }
 
+        // جلب البيانات من جوجل شيتس
         async function loadDataFromGoogleScript(sheetName) {
             const url = `${GOOGLE_SCRIPT_URL}?sheetId=${SHEET_ID}&sheetName=${sheetName}`;
             try {
@@ -338,6 +403,7 @@
             }
         }
 
+        // معالجة بيانات النصوص
         function processTextData(jsonData) {
             const textsMap = new Map();
             jsonData.forEach(row => {
@@ -348,13 +414,18 @@
                     }
                     if (row.question && row.question.trim()) {
                         const options = [row.option1, row.option2, row.option3, row.option4, row.option5].filter(opt => opt && opt.trim());
-                        textsMap.get(textContent).questions.push({ question: row.question.trim(), options, correctAnswer: row.correctanswer });
+                        textsMap.get(textContent).questions.push({ 
+                            question: row.question.trim(), 
+                            options, 
+                            correctAnswer: row.correctanswer 
+                        });
                     }
                 }
             });
             return Array.from(textsMap.values());
         }
 
+        // معالجة بيانات الأسئلة المتعددة
         function processMultipleData(jsonData) {
             return jsonData.map(row => ({
                 question: row.question,
@@ -363,42 +434,51 @@
             }));
         }
 
+        // بدء الاختبار
         async function startTest() {
             studentName = studentNameInput.value.trim();
             track = trackSelect.value;
+            
             if (!studentName || !track) {
                 alert('الرجاء إدخال الاسم واختيار المسار.');
                 return;
             }
+            
             showSection(loadingSection, welcomeSection);
             errorSection.classList.remove('active');
 
             try {
+                // تحديد عدد الأسئلة حسب المسار
                 if (track === 'scientific') {
                     totalTextQuestions = 7;
                     questionsPerPage = 4;
-                    totalMultipleQuestions = 16;
+                    totalMultipleQuestions = 18; // تم التعديل من 16 إلى 18
                 } else {
                     totalTextQuestions = 5;
                     questionsPerPage = 5;
                     totalMultipleQuestions = 35;
                 }
 
+                // جلب البيانات من جوجل شيتس
                 const [textsJSON, multipleJSON] = await Promise.all([
                     loadDataFromGoogleScript('texts'),
                     loadDataFromGoogleScript('multiple')
                 ]);
 
+                // معالجة البيانات
                 textData = processTextData(textsJSON);
                 multipleData = processMultipleData(multipleJSON);
 
+                // اختيار النص المناسب
                 const suitableTexts = textData.filter(text => text.questions.length >= totalTextQuestions);
                 if (suitableTexts.length === 0) throw new Error(`لا توجد نصوص تحتوي على ${totalTextQuestions} أسئلة.`);
                 
+                // اختيار نص وأسئلة عشوائية
                 const selectedText = suitableTexts[Math.floor(Math.random() * suitableTexts.length)];
                 selectedTextQuestions = getRandomSubset(selectedText.questions, totalTextQuestions);
                 selectedMultipleQuestions = getRandomSubset(multipleData, totalMultipleQuestions);
 
+                // عرض الأسئلة النصية
                 showSection(textSection, loadingSection, showTextQuestions);
             } catch (error) {
                 errorMessageP.textContent = error.message || 'فشل تحميل أسئلة الاختبار.';
@@ -406,27 +486,32 @@
             }
         }
 
+        // عرض الأسئلة النصية
         function showTextQuestions() {
             const selectedText = textData.find(text => text.questions.some(q => selectedTextQuestions.includes(q)));
-            textContentDiv.innerHTML = `<h3 class="passage-title">Reading Passage:</h3><p>${selectedText.text}</p>`;
+            textContentDiv.innerHTML = `<h3>النص:</h3><p>${selectedText.text}</p>`;
             textQuestionsContainer.innerHTML = '';
             totalQuestionsSpan.textContent = selectedTextQuestions.length;
 
+            // إنشاء عناصر الأسئلة
             selectedTextQuestions.forEach((q, index) => {
                 const questionDiv = createQuestionElement(`text-q${index}`, q, index + 1);
                 textQuestionsContainer.appendChild(questionDiv);
             });
+            
             updateProgressBar(progressBar, 0);
             checkTextQuestionsCompletion();
         }
 
+        // إنشاء عنصر سؤال
         function createQuestionElement(idPrefix, q, displayIndex) {
             const questionDiv = document.createElement('div');
             questionDiv.className = 'question';
-            questionDiv.innerHTML = `<h4>Question ${displayIndex}: ${q.question}</h4><div class="options" id="${idPrefix}"></div>`;
+            questionDiv.innerHTML = `<h4>السؤال ${displayIndex}: ${q.question}</h4><div class="options" id="${idPrefix}"></div>`;
             const optionsDiv = questionDiv.querySelector('.options');
             const shuffledOptions = shuffleArray([...q.options]);
 
+            // إضافة خيارات الإجابة
             shuffledOptions.forEach((option, optIndex) => {
                 optionsDiv.innerHTML += `
                     <label>
@@ -436,50 +521,78 @@
                 `;
             });
 
+            // إعداد مستمعي الأحداث للاختيارات
             optionsDiv.querySelectorAll('input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', (e) => {
                     answers[e.target.dataset.questionId] = {
                         answerIndex: parseInt(e.target.dataset.optionIndex, 10),
                         answerText: e.target.value
                     };
-                    if (idPrefix.startsWith('text')) checkTextQuestionsCompletion();
-                    else checkMultipleQuestionsCompletion();
+                    
+                    // تفعيل الزر بعد الإجابة على جميع الأسئلة
+                    if (idPrefix.startsWith('text')) {
+                        checkTextQuestionsCompletion();
+                    } else {
+                        checkMultipleQuestionsCompletion();
+                    }
+                    
+                    // التمرير لأسفل الصفحة بعد الإجابة (لتحسين تجربة الجوال)
+                    setTimeout(() => {
+                        const questionElement = e.target.closest('.question');
+                        if (questionElement) {
+                            questionElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                        }
+                    }, 200);
                 });
             });
             return questionDiv;
         }
 
+        // التحقق من اكتمال الإجابة على الأسئلة النصية
         function checkTextQuestionsCompletion() {
             const answeredCount = Object.keys(answers).filter(k => k.startsWith('text-q')).length;
             nextTextQuestionsBtn.disabled = answeredCount !== selectedTextQuestions.length;
             updateProgressBar(progressBar, (answeredCount / selectedTextQuestions.length) * 100);
             currentQuestionSpan.textContent = Math.min(answeredCount + 1, selectedTextQuestions.length);
+            
+            // إذا أجاب على جميع الأسئلة، قم بتفعيل الزر تلقائياً
+            if (answeredCount === selectedTextQuestions.length) {
+                nextTextQuestionsBtn.disabled = false;
+                nextTextQuestionsBtn.focus();
+            }
         }
 
+        // عرض الأسئلة المتعددة
         function showMultipleQuestions() {
             currentMultiplePage = 0;
             showMultipleQuestionsPage();
         }
 
+        // عرض صفحة معينة من الأسئلة المتعددة
         function showMultipleQuestionsPage() {
             const startIndex = currentMultiplePage * questionsPerPage;
             const endIndex = Math.min(startIndex + questionsPerPage, selectedMultipleQuestions.length);
             multipleQuestionsContainer.innerHTML = '';
 
+            // عرض الأسئلة للصفحة الحالية
             for (let i = startIndex; i < endIndex; i++) {
                 const q = selectedMultipleQuestions[i];
                 const questionDiv = createQuestionElement(`multi-q${i}`, q, i + 1);
                 multipleQuestionsContainer.appendChild(questionDiv);
+                
+                // استعادة الإجابة إذا كانت موجودة
                 if (answers[`multi-q${i}`]) {
                     const selected = questionDiv.querySelector(`input[value="${CSS.escape(answers[`multi-q${i}`].answerText)}"]`);
                     if (selected) selected.checked = true;
                 }
             }
 
+            // تحديث معلومات التتبع
             totalQuestionsMultipleSpan.textContent = selectedMultipleQuestions.length;
             currentQuestionMultipleSpan.textContent = startIndex + 1;
             currentQuestionEndSpan.textContent = endIndex;
             
+            // التحكم بعرض الأزرار
             const isLastPage = currentMultiplePage >= Math.ceil(selectedMultipleQuestions.length / questionsPerPage) - 1;
             nextMultipleQuestionsBtn.style.display = isLastPage ? 'none' : 'block';
             finishTestBtn.style.display = isLastPage ? 'block' : 'none';
@@ -487,67 +600,91 @@
             checkMultipleQuestionsCompletion();
         }
 
+        // عرض الصفحة التالية من الأسئلة المتعددة
         function showNextMultipleQuestions() {
             currentMultiplePage++;
             showMultipleQuestionsPage();
+            
+            // التمرير لأعلى الصفحة بعد الانتقال
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // التحقق من اكتمال الإجابة على الأسئلة المتعددة
         function checkMultipleQuestionsCompletion() {
             const answeredCount = Object.keys(answers).filter(k => k.startsWith('multi-q')).length;
             updateProgressBar(progressBarMultiple, (answeredCount / selectedMultipleQuestions.length) * 100);
 
             const startIndex = currentMultiplePage * questionsPerPage;
             const endIndex = Math.min(startIndex + questionsPerPage, selectedMultipleQuestions.length);
-            const currentPageAnswered = Array.from({ length: endIndex - startIndex }, (_, i) => `multi-q${startIndex + i}`).every(qId => answers[qId]);
+            const currentPageAnswered = Array.from({ length: endIndex - startIndex }, (_, i) => `multi-q${startIndex + i}`)
+                .every(qId => answers[qId]);
             
             nextMultipleQuestionsBtn.disabled = !currentPageAnswered;
             finishTestBtn.disabled = answeredCount !== selectedMultipleQuestions.length;
+            
+            // إذا كانت هذه آخر صفحة وأجاب على جميع الأسئلة، فعّل زر الإنهاء
+            const isLastPage = currentMultiplePage >= Math.ceil(selectedMultipleQuestions.length / questionsPerPage) - 1;
+            if (isLastPage && answeredCount === selectedMultipleQuestions.length) {
+                finishTestBtn.disabled = false;
+                finishTestBtn.focus();
+            }
         }
 
+        // تحديث شريط التقدم
         function updateProgressBar(barElement, percentage) {
             barElement.style.width = `${percentage}%`;
         }
 
+        // عرض النتائج
         function showResults() {
             let correctCount = 0;
             wrongAnswers = [];
 
+            // التحقق من صحة الإجابة
             const checkAnswer = (q, userAnswerData) => {
                 if (!userAnswerData) return false;
-                // The correct answer from Sheets is 1-based, user answer index is 0-based.
                 const correctIndex = parseInt(q.correctAnswer, 10) - 1;
-                // Find the text of the correct answer from the original options list
                 const correctAnswerText = q.options[correctIndex];
-                // Compare the text of the user's answer with the text of the correct answer.
                 return userAnswerData.answerText === correctAnswerText;
             };
             
+            // الحصول على نص الإجابة الصحيحة
             const getCorrectAnswerText = (q) => {
                  const correctIndex = parseInt(q.correctAnswer, 10) - 1;
                  return q.options[correctIndex] || "إجابة غير محددة";
             }
 
+            // حساب الإجابات الصحيحة للأسئلة النصية
             selectedTextQuestions.forEach((q, index) => {
                 const userAnswerData = answers[`text-q${index}`];
                 if (checkAnswer(q, userAnswerData)) {
                     correctCount++;
                 } else {
-                    wrongAnswers.push({ ...q, userAnswer: userAnswerData ? userAnswerData.answerText : "لم تتم الإجابة" });
+                    wrongAnswers.push({ 
+                        ...q, 
+                        userAnswer: userAnswerData ? userAnswerData.answerText : "لم تتم الإجابة" 
+                    });
                 }
             });
 
+            // حساب الإجابات الصحيحة للأسئلة المتعددة
             selectedMultipleQuestions.forEach((q, index) => {
                 const userAnswerData = answers[`multi-q${index}`];
                 if (checkAnswer(q, userAnswerData)) {
                     correctCount++;
                 } else {
-                    wrongAnswers.push({ ...q, userAnswer: userAnswerData ? userAnswerData.answerText : "لم تتم الإجابة" });
+                    wrongAnswers.push({ 
+                        ...q, 
+                        userAnswer: userAnswerData ? userAnswerData.answerText : "لم تتم الإجابة" 
+                    });
                 }
             });
 
+            // حساب النسبة المئوية
             const totalQuestions = selectedTextQuestions.length + selectedMultipleQuestions.length;
             const percentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
 
+            // عرض النتائج
             studentResultP.textContent = `تهانينا ${studentName}! لقد أكملت الاختبار.`;
             scorePercentageDiv.textContent = `${percentage}%`;
             scoreDisplayDiv.innerHTML = `
@@ -559,14 +696,15 @@
             sendTelegramReport(correctCount, totalQuestions, percentage, getCorrectAnswerText);
         }
 
+        // عرض التصحيحات
         function displayCorrections(getCorrectAnswerText) {
             correctionsContainer.innerHTML = '';
             if (wrongAnswers.length > 0) {
                 let correctionsHTML = '<h3>تصحيح الأخطاء:</h3>';
-                wrongAnswers.forEach(q => {
+                wrongAnswers.forEach((q, i) => {
                     correctionsHTML += `
                         <div class="correction-item">
-                            <p><strong>السؤال:</strong> ${q.question}</p>
+                            <p><strong>السؤال ${i + 1}:</strong> ${q.question}</p>
                             <p><span class="icon">❌</span> <span class="user-answer">إجابتك: ${q.userAnswer}</span></p>
                             <p><span class="icon">✔️</span> <span class="correct-answer">الإجابة الصحيحة: ${getCorrectAnswerText(q)}</span></p>
                         </div>
@@ -576,9 +714,10 @@
             }
         }
 
+        // إرسال تقرير النتائج عبر تلغرام
         async function sendTelegramReport(correctCount, totalQuestions, percentage, getCorrectAnswerText) {
-            const botToken = '8138541482:AAEMwUnhx_pHI1PxZn6oVS-naNp4jiL08TQ'; // <-- ضع توكن البوت هنا
-            const chatId = '-1001722914216'; // <-- ضع معرف الدردشة هنا
+            const botToken = '8138541482:AAEMwUnhx_pHI1PxZn6oVS-naNp4jiL08TQ';
+            const chatId = '-1001722914216';
 
             let correctionsText = wrongAnswers.map((q, i) => 
                 `${i + 1}. السؤال: ${q.question}\n` +
@@ -614,13 +753,14 @@ ${correctionsText}
                         chat_id: chatId,
                         text: message,
                         parse_mode: 'Markdown'
-                    } )
+                    })
                 });
             } catch (error) {
                 console.error('فشل إرسال تقرير تليجرام:', error);
             }
         }
 
+        // إعادة تشغيل الاختبار
         function restartTest() {
             studentName = '';
             track = '';
