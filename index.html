@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>اختبار اللغة الإنجليزية</title>
+    <title>اختبار اللغة الإنكليزية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* تحسينات للجوال */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f0f4f8;
+            --container-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --error-color: #e74c3c;
+            --success-color: #27ae60;
+            --hover-light: #f0f8ff;
+        }
+
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -16,24 +30,41 @@
             max-width: 100%;
             margin: 0;
             padding: 15px;
-            background-color: #f0f4f8;
-            color: #333;
-            border: none;
-            box-shadow: none;
+            background-color: var(--background-color);
+            color: var(--text-color);
             -webkit-text-size-adjust: 100%;
         }
         
         .section {
-            background-color: #ffffff;
-            padding: 20px;
+            background-color: var(--container-bg);
+            padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             margin-bottom: 15px;
             display: none;
             width: 100%;
             overflow-x: hidden;
+            animation: fadeIn 0.5s ease-in-out;
         }
-        
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        h1 { font-size: 28px; }
+        h2 { font-size: 20px; }
+
         button {
             background: linear-gradient(45deg, #3498db, #5dade2);
             color: white;
@@ -49,73 +80,10 @@
             width: 100%;
             touch-action: manipulation;
         }
-        
-        .options label {
-            padding: 10px;
-            font-size: 15px;
-        }
-        
-        .question {
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .text-content {
-            padding: 15px;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-        
-        /* تحسينات للشاشات الصغيرة */
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .section {
-                padding: 15px;
-            }
-            
-            h1 {
-                font-size: 22px;
-            }
-            
-            h2 {
-                font-size: 18px;
-            }
-            
-            button {
-                padding: 10px 15px;
-                font-size: 15px;
-            }
-        }
 
-        /* بقية التنسيقات كما هي */
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --background-color: #f0f4f8;
-            --container-bg: #ffffff;
-            --text-color: #333;
-            --border-color: #e0e0e0;
-            --error-color: #e74c3c;
-            --success-color: #27ae60;
-            --hover-light: #f0f8ff;
-        }
-
-        .active {
-            display: block;
-        }
-
-        h1, h2 {
-            color: #2c3e50;
-            text-align: center;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
         }
 
         button:disabled {
@@ -126,7 +94,7 @@
             opacity: 0.7;
         }
 
-        input[type="text"], select {
+        input[type="text"], select, textarea {
             padding: 12px;
             width: 100%;
             margin-bottom: 15px;
@@ -135,11 +103,12 @@
             font-family: 'Tajawal', sans-serif;
             text-align: right;
             font-size: 16px;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        input[type="text"]:focus, select:focus {
+        input[type="text"]:focus, select:focus, textarea:focus {
             border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
             outline: none;
         }
 
@@ -148,11 +117,13 @@
             direction: ltr;
             text-align: left;
             margin-top: 0;
+            line-height: 1.5;
         }
 
         .options label {
             display: block;
             margin: 8px 0;
+            padding: 12px;
             cursor: pointer;
             border-radius: 8px;
             border: 1px solid var(--border-color);
@@ -165,6 +136,12 @@
         .options label:hover {
             background-color: var(--hover-light);
             border-color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        
+        .options input[type="radio"]:checked + span {
+            font-weight: bold;
+            color: var(--primary-color);
         }
 
         .options input[type="radio"] {
@@ -194,11 +171,17 @@
         }
 
         .result-score {
-            font-size: 36px;
+            font-size: 48px;
             font-weight: bold;
             color: var(--success-color);
             text-align: center;
             margin: 15px 0;
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .summary-item, .correction-item {
@@ -209,40 +192,85 @@
             border-left: 4px solid var(--primary-color);
         }
 
-        .correction-item {
-            border-left-color: var(--error-color);
-        }
+        .correction-item { border-left-color: var(--error-color); }
+        .correction-item .user-answer { color: var(--error-color); text-decoration: line-through; }
+        .correction-item .correct-answer { color: var(--success-color); font-weight: bold; }
+        .correction-item p { margin: 5px 0; font-family: 'Poppins', sans-serif; direction: ltr; text-align: left; font-size: 14px; }
+        .correction-item .icon { margin-right: 8px; }
+        
+        .button-group { display: flex; gap: 10px; margin-top: 15px; }
+        .button-group button { flex: 1; }
 
-        .correction-item .user-answer {
-            color: var(--error-color);
-            text-decoration: line-through;
-        }
-
-        .correction-item .correct-answer {
-            color: var(--success-color);
+        /* رسالة متحركة */
+        .animated-message {
+            text-align: center;
+            font-size: 18px;
             font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .15em solid orange;
+            animation: typing 4s steps(40, end) infinite, blink-caret .75s step-end infinite;
         }
 
-        .correction-item p {
-            margin: 5px 0;
-            font-family: 'Poppins', sans-serif;
-            direction: ltr;
-            text-align: left;
-            font-size: 14px;
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
         }
 
-        .correction-item .icon {
-            margin-right: 8px;
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
         }
-        
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
+
+        /* شاشة التحميل */
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
-        
-        .button-group button {
-            flex: 1;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #loading-section div { text-align: center; }
+
+        /* مربع الملاحظات */
+        #feedback-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        #feedback-modal.active { display: flex; }
+        .feedback-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            animation: fadeIn 0.3s;
+        }
+        .feedback-box h3 { margin-top: 0; }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .section { padding: 15px; }
+            h1 { font-size: 24px; }
+            h2 { font-size: 18px; }
+            button { padding: 12px 15px; font-size: 15px; }
+            .animated-message { font-size: 16px; }
         }
     </style>
 </head>
@@ -259,11 +287,13 @@
             <option value="literary">المسار الأدبي</option>
         </select>
         <button id="start-test">بدء الاختبار</button>
+        <div class="animated-message">نتمنى لكم النجاح في امتحاناتكم القادمة</div>
     </div>
 
     <!-- قسم التحميل -->
     <div id="loading-section" class="section">
-        <div class="loading">
+        <div>
+            <div class="loader"></div>
             <h2>جاري تحضير أسئلة الاختبار...</h2>
             <p>لحظات من فضلك، نقوم بإعداد تجربة اختبار مخصصة لك.</p>
         </div>
@@ -308,16 +338,29 @@
         <button id="restart-test">إعادة الاختبار</button>
     </div>
 
+    <!-- مربع الملاحظات -->
+    <div id="feedback-modal">
+        <div class="feedback-box">
+            <h3>ملاحظات حول الاختبار</h3>
+            <p>إذا كانت لديك أي ملاحظات حول الأسئلة أو الاختبار بشكل عام، يرجى كتابتها هنا. ملاحظاتك تساعدنا على التحسين.</p>
+            <textarea id="feedback-text" rows="5" placeholder="اكتب ملاحظاتك هنا (اختياري)"></textarea>
+            <div class="button-group">
+                <button id="submit-feedback">مشاهدة النتيجة</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // المتغيرات العامة
         let studentName = '';
         let track = '';
+        let userFeedback = '';
         let answers = {};
         let textData = [];
         let multipleData = [];
         let questionsPerPage = 4;
         let totalTextQuestions = 7;
-        let totalMultipleQuestions = 18; // تم زيادة الأسئلة من 16 إلى 18 للقسم العلمي
+        let totalMultipleQuestions = 18;
         let selectedTextQuestions = [];
         let selectedMultipleQuestions = [];
         let currentMultiplePage = 0;
@@ -357,26 +400,33 @@
         const scoreDisplayDiv = document.getElementById('score-display');
         const errorMessageP = document.getElementById('error-message');
         const correctionsContainer = document.getElementById('corrections-container');
+        const feedbackModal = document.getElementById('feedback-modal');
+        const feedbackText = document.getElementById('feedback-text');
+        const submitFeedbackBtn = document.getElementById('submit-feedback');
 
-        // مستمعي الأحداث
-        startTestBtn.addEventListener('click', startTest);
-        nextTextQuestionsBtn.addEventListener('click', () => showSection(multipleSection, textSection, showMultipleQuestions));
-        nextMultipleQuestionsBtn.addEventListener('click', showNextMultipleQuestions);
-        finishTestBtn.addEventListener('click', () => showSection(resultsSection, multipleSection, showResults));
-        restartTestBtn.addEventListener('click', restartTest);
-        retryLoadingBtn.addEventListener('click', startTest);
+        // التأكد من تحميل DOM قبل إضافة مستمعي الأحداث
+        document.addEventListener('DOMContentLoaded', function() {
+            // مستمعي الأحداث
+            startTestBtn.addEventListener('click', startTest);
+            nextTextQuestionsBtn.addEventListener('click', () => showSection(multipleSection, textSection, showMultipleQuestions));
+            nextMultipleQuestionsBtn.addEventListener('click', showNextMultipleQuestions);
+            finishTestBtn.addEventListener('click', () => feedbackModal.classList.add('active'));
+            submitFeedbackBtn.addEventListener('click', () => {
+                userFeedback = feedbackText.value.trim();
+                feedbackModal.classList.remove('active');
+                showSection(resultsSection, multipleSection, showResults);
+            });
+            restartTestBtn.addEventListener('click', restartTest);
+            retryLoadingBtn.addEventListener('click', startTest);
+        });
 
-        // إظهار قسم معين وإخفاء الآخر
         function showSection(targetSection, currentSection = null, callback = null) {
-            if (currentSection) currentSection.classList.remove('active');
+            document.querySelectorAll('.section.active').forEach(sec => sec.classList.remove('active'));
             targetSection.classList.add('active');
             if (callback) callback();
-            
-            // التمرير لأعلى الصفحة بعد الانتقال
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // خلط المصفوفة عشوائياً
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -385,12 +435,10 @@
             return array;
         }
 
-        // اختيار مجموعة عشوائية من الأسئلة
         function getRandomSubset(array, count) {
             return shuffleArray([...array]).slice(0, count);
         }
 
-        // جلب البيانات من جوجل شيتس
         async function loadDataFromGoogleScript(sheetName) {
             const url = `${GOOGLE_SCRIPT_URL}?sheetId=${SHEET_ID}&sheetName=${sheetName}`;
             try {
@@ -403,7 +451,6 @@
             }
         }
 
-        // معالجة بيانات النصوص
         function processTextData(jsonData) {
             const textsMap = new Map();
             jsonData.forEach(row => {
@@ -425,7 +472,6 @@
             return Array.from(textsMap.values());
         }
 
-        // معالجة بيانات الأسئلة المتعددة
         function processMultipleData(jsonData) {
             return jsonData.map(row => ({
                 question: row.question,
@@ -434,7 +480,6 @@
             }));
         }
 
-        // بدء الاختبار
         async function startTest() {
             studentName = studentNameInput.value.trim();
             track = trackSelect.value;
@@ -448,37 +493,31 @@
             errorSection.classList.remove('active');
 
             try {
-                // تحديد عدد الأسئلة حسب المسار
                 if (track === 'scientific') {
                     totalTextQuestions = 7;
                     questionsPerPage = 4;
-                    totalMultipleQuestions = 18; // تم التعديل من 16 إلى 18
+                    totalMultipleQuestions = 18;
                 } else {
                     totalTextQuestions = 5;
                     questionsPerPage = 5;
                     totalMultipleQuestions = 35;
                 }
 
-                // جلب البيانات من جوجل شيتس
                 const [textsJSON, multipleJSON] = await Promise.all([
                     loadDataFromGoogleScript('texts'),
                     loadDataFromGoogleScript('multiple')
                 ]);
 
-                // معالجة البيانات
                 textData = processTextData(textsJSON);
                 multipleData = processMultipleData(multipleJSON);
 
-                // اختيار النص المناسب
                 const suitableTexts = textData.filter(text => text.questions.length >= totalTextQuestions);
                 if (suitableTexts.length === 0) throw new Error(`لا توجد نصوص تحتوي على ${totalTextQuestions} أسئلة.`);
                 
-                // اختيار نص وأسئلة عشوائية
                 const selectedText = suitableTexts[Math.floor(Math.random() * suitableTexts.length)];
                 selectedTextQuestions = getRandomSubset(selectedText.questions, totalTextQuestions);
                 selectedMultipleQuestions = getRandomSubset(multipleData, totalMultipleQuestions);
 
-                // عرض الأسئلة النصية
                 showSection(textSection, loadingSection, showTextQuestions);
             } catch (error) {
                 errorMessageP.textContent = error.message || 'فشل تحميل أسئلة الاختبار.';
@@ -486,14 +525,12 @@
             }
         }
 
-        // عرض الأسئلة النصية
         function showTextQuestions() {
             const selectedText = textData.find(text => text.questions.some(q => selectedTextQuestions.includes(q)));
-            textContentDiv.innerHTML = `<h3>النص:</h3><p>${selectedText.text}</p>`;
+            textContentDiv.innerHTML = `<h3>النص:</h3><p>${selectedText.text.replace(/\n/g, '<br>')}</p>`;
             textQuestionsContainer.innerHTML = '';
             totalQuestionsSpan.textContent = selectedTextQuestions.length;
 
-            // إنشاء عناصر الأسئلة
             selectedTextQuestions.forEach((q, index) => {
                 const questionDiv = createQuestionElement(`text-q${index}`, q, index + 1);
                 textQuestionsContainer.appendChild(questionDiv);
@@ -503,25 +540,22 @@
             checkTextQuestionsCompletion();
         }
 
-        // إنشاء عنصر سؤال
         function createQuestionElement(idPrefix, q, displayIndex) {
             const questionDiv = document.createElement('div');
             questionDiv.className = 'question';
-            questionDiv.innerHTML = `<h4>السؤال ${displayIndex}: ${q.question}</h4><div class="options" id="${idPrefix}"></div>`;
+            questionDiv.innerHTML = `<h4>Question ${displayIndex}: ${q.question}</h4><div class="options" id="${idPrefix}"></div>`;
             const optionsDiv = questionDiv.querySelector('.options');
             const shuffledOptions = shuffleArray([...q.options]);
 
-            // إضافة خيارات الإجابة
             shuffledOptions.forEach((option, optIndex) => {
                 optionsDiv.innerHTML += `
                     <label>
                         <input type="radio" name="${idPrefix}" value="${option}" data-question-id="${idPrefix}" data-option-index="${optIndex}">
-                        ${option}
+                        <span>${option}</span>
                     </label>
                 `;
             });
 
-            // إعداد مستمعي الأحداث للاختيارات
             optionsDiv.querySelectorAll('input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', (e) => {
                     answers[e.target.dataset.questionId] = {
@@ -529,70 +563,48 @@
                         answerText: e.target.value
                     };
                     
-                    // تفعيل الزر بعد الإجابة على جميع الأسئلة
                     if (idPrefix.startsWith('text')) {
                         checkTextQuestionsCompletion();
                     } else {
                         checkMultipleQuestionsCompletion();
                     }
-                    
-                    // التمرير لأسفل الصفحة بعد الإجابة (لتحسين تجربة الجوال)
-                    setTimeout(() => {
-                        const questionElement = e.target.closest('.question');
-                        if (questionElement) {
-                            questionElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                        }
-                    }, 200);
                 });
             });
             return questionDiv;
         }
 
-        // التحقق من اكتمال الإجابة على الأسئلة النصية
         function checkTextQuestionsCompletion() {
             const answeredCount = Object.keys(answers).filter(k => k.startsWith('text-q')).length;
             nextTextQuestionsBtn.disabled = answeredCount !== selectedTextQuestions.length;
             updateProgressBar(progressBar, (answeredCount / selectedTextQuestions.length) * 100);
             currentQuestionSpan.textContent = Math.min(answeredCount + 1, selectedTextQuestions.length);
-            
-            // إذا أجاب على جميع الأسئلة، قم بتفعيل الزر تلقائياً
-            if (answeredCount === selectedTextQuestions.length) {
-                nextTextQuestionsBtn.disabled = false;
-                nextTextQuestionsBtn.focus();
-            }
         }
 
-        // عرض الأسئلة المتعددة
         function showMultipleQuestions() {
             currentMultiplePage = 0;
             showMultipleQuestionsPage();
         }
 
-        // عرض صفحة معينة من الأسئلة المتعددة
         function showMultipleQuestionsPage() {
             const startIndex = currentMultiplePage * questionsPerPage;
             const endIndex = Math.min(startIndex + questionsPerPage, selectedMultipleQuestions.length);
             multipleQuestionsContainer.innerHTML = '';
 
-            // عرض الأسئلة للصفحة الحالية
             for (let i = startIndex; i < endIndex; i++) {
                 const q = selectedMultipleQuestions[i];
                 const questionDiv = createQuestionElement(`multi-q${i}`, q, i + 1);
                 multipleQuestionsContainer.appendChild(questionDiv);
                 
-                // استعادة الإجابة إذا كانت موجودة
                 if (answers[`multi-q${i}`]) {
                     const selected = questionDiv.querySelector(`input[value="${CSS.escape(answers[`multi-q${i}`].answerText)}"]`);
                     if (selected) selected.checked = true;
                 }
             }
 
-            // تحديث معلومات التتبع
             totalQuestionsMultipleSpan.textContent = selectedMultipleQuestions.length;
             currentQuestionMultipleSpan.textContent = startIndex + 1;
             currentQuestionEndSpan.textContent = endIndex;
             
-            // التحكم بعرض الأزرار
             const isLastPage = currentMultiplePage >= Math.ceil(selectedMultipleQuestions.length / questionsPerPage) - 1;
             nextMultipleQuestionsBtn.style.display = isLastPage ? 'none' : 'block';
             finishTestBtn.style.display = isLastPage ? 'block' : 'none';
@@ -600,16 +612,12 @@
             checkMultipleQuestionsCompletion();
         }
 
-        // عرض الصفحة التالية من الأسئلة المتعددة
         function showNextMultipleQuestions() {
             currentMultiplePage++;
             showMultipleQuestionsPage();
-            
-            // التمرير لأعلى الصفحة بعد الانتقال
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // التحقق من اكتمال الإجابة على الأسئلة المتعددة
         function checkMultipleQuestionsCompletion() {
             const answeredCount = Object.keys(answers).filter(k => k.startsWith('multi-q')).length;
             updateProgressBar(progressBarMultiple, (answeredCount / selectedMultipleQuestions.length) * 100);
@@ -621,26 +629,16 @@
             
             nextMultipleQuestionsBtn.disabled = !currentPageAnswered;
             finishTestBtn.disabled = answeredCount !== selectedMultipleQuestions.length;
-            
-            // إذا كانت هذه آخر صفحة وأجاب على جميع الأسئلة، فعّل زر الإنهاء
-            const isLastPage = currentMultiplePage >= Math.ceil(selectedMultipleQuestions.length / questionsPerPage) - 1;
-            if (isLastPage && answeredCount === selectedMultipleQuestions.length) {
-                finishTestBtn.disabled = false;
-                finishTestBtn.focus();
-            }
         }
 
-        // تحديث شريط التقدم
         function updateProgressBar(barElement, percentage) {
             barElement.style.width = `${percentage}%`;
         }
 
-        // عرض النتائج
         function showResults() {
             let correctCount = 0;
             wrongAnswers = [];
 
-            // التحقق من صحة الإجابة
             const checkAnswer = (q, userAnswerData) => {
                 if (!userAnswerData) return false;
                 const correctIndex = parseInt(q.correctAnswer, 10) - 1;
@@ -648,43 +646,32 @@
                 return userAnswerData.answerText === correctAnswerText;
             };
             
-            // الحصول على نص الإجابة الصحيحة
             const getCorrectAnswerText = (q) => {
                  const correctIndex = parseInt(q.correctAnswer, 10) - 1;
                  return q.options[correctIndex] || "إجابة غير محددة";
             }
 
-            // حساب الإجابات الصحيحة للأسئلة النصية
             selectedTextQuestions.forEach((q, index) => {
                 const userAnswerData = answers[`text-q${index}`];
                 if (checkAnswer(q, userAnswerData)) {
                     correctCount++;
                 } else {
-                    wrongAnswers.push({ 
-                        ...q, 
-                        userAnswer: userAnswerData ? userAnswerData.answerText : "لم تتم الإجابة" 
-                    });
+                    wrongAnswers.push({ ...q, userAnswer: userAnswerData ? userAnswerData.answerText : "لم تتم الإجابة" });
                 }
             });
 
-            // حساب الإجابات الصحيحة للأسئلة المتعددة
             selectedMultipleQuestions.forEach((q, index) => {
                 const userAnswerData = answers[`multi-q${index}`];
                 if (checkAnswer(q, userAnswerData)) {
                     correctCount++;
                 } else {
-                    wrongAnswers.push({ 
-                        ...q, 
-                        userAnswer: userAnswerData ? userAnswerData.answerText : "لم تتم الإجابة" 
-                    });
+                    wrongAnswers.push({ ...q, userAnswer: userAnswerData ? userAnswerData.answerText : "لم تتم الإجابة" });
                 }
             });
 
-            // حساب النسبة المئوية
             const totalQuestions = selectedTextQuestions.length + selectedMultipleQuestions.length;
             const percentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
 
-            // عرض النتائج
             studentResultP.textContent = `تهانينا ${studentName}! لقد أكملت الاختبار.`;
             scorePercentageDiv.textContent = `${percentage}%`;
             scoreDisplayDiv.innerHTML = `
@@ -696,7 +683,6 @@
             sendTelegramReport(correctCount, totalQuestions, percentage, getCorrectAnswerText);
         }
 
-        // عرض التصحيحات
         function displayCorrections(getCorrectAnswerText) {
             correctionsContainer.innerHTML = '';
             if (wrongAnswers.length > 0) {
@@ -704,9 +690,9 @@
                 wrongAnswers.forEach((q, i) => {
                     correctionsHTML += `
                         <div class="correction-item">
-                            <p><strong>السؤال ${i + 1}:</strong> ${q.question}</p>
-                            <p><span class="icon">❌</span> <span class="user-answer">إجابتك: ${q.userAnswer}</span></p>
-                            <p><span class="icon">✔️</span> <span class="correct-answer">الإجابة الصحيحة: ${getCorrectAnswerText(q)}</span></p>
+                            <p><strong>Question ${i + 1}:</strong> ${q.question}</p>
+                            <p><span class="icon">❌</span> <span class="user-answer">Your answer: ${q.userAnswer}</span></p>
+                            <p><span class="icon">✔️</span> <span class="correct-answer">Correct answer: ${getCorrectAnswerText(q)}</span></p>
                         </div>
                     `;
                 });
@@ -714,34 +700,42 @@
             }
         }
 
-        // إرسال تقرير النتائج عبر تلغرام
         async function sendTelegramReport(correctCount, totalQuestions, percentage, getCorrectAnswerText) {
             const botToken = '8138541482:AAEMwUnhx_pHI1PxZn6oVS-naNp4jiL08TQ';
             const chatId = '-1001722914216';
 
             let correctionsText = wrongAnswers.map((q, i) => 
-                `${i + 1}. السؤال: ${q.question}\n` +
-                `   - إجابتك: ${q.userAnswer}\n` +
-                `   - الصحيحة: ${getCorrectAnswerText(q)}`
+                `*_${i + 1}. Question: ${q.question}_*\n` +
+                `   - Your answer: ${q.userAnswer}\n` +
+                `   - Correct: ${getCorrectAnswerText(q)}`
             ).join('\n\n');
             
             if (correctionsText.length === 0) {
-                correctionsText = "لا توجد أخطاء، عمل رائع!";
+                correctionsText = "_لا توجد أخطاء، عمل رائع!_";
+            }
+
+            let feedbackSection = '';
+            if (userFeedback) {
+                feedbackSection = `
+------------------------------------
+*ملاحظات الطالب:*
+_${userFeedback}_
+`;
             }
 
             const message = `
-*تقرير اختبار جديد* 📝
-------------------------------------
-*الاسم:* ${studentName}
-*المسار:* ${track === 'scientific' ? 'علمي' : 'أدبي'}
-*تاريخ الاختبار:* ${new Date().toLocaleString('ar-EG')}
-------------------------------------
-*النتيجة النهائية:*
-- *الدرجة:* ${correctCount} من ${totalQuestions}
-- *النسبة المئوية:* ${percentage}%
-------------------------------------
-*ملخص الأخطاء:*
-${correctionsText}
+***تقرير اختبار جديد*** 📝
+====================================
+***الاسم:*** _${studentName}_
+***المسار:*** _${track === 'scientific' ? 'علمي' : 'أدبي'}_
+***تاريخ الاختبار:*** _${new Date().toLocaleString('ar-EG')}_
+====================================
+***النتيجة النهائية:***
+- ***الدرجة:*** ***_${correctCount} من ${totalQuestions}_***
+- ***النسبة المئوية:*** ***_${percentage}%_***
+====================================
+***ملخص الأخطاء:***
+${correctionsText}${feedbackSection}
             `;
 
             const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -760,18 +754,20 @@ ${correctionsText}
             }
         }
 
-        // إعادة تشغيل الاختبار
         function restartTest() {
             studentName = '';
             track = '';
+            userFeedback = '';
             answers = {};
             wrongAnswers = [];
             selectedTextQuestions = [];
             selectedMultipleQuestions = [];
             studentNameInput.value = '';
             trackSelect.value = '';
+            feedbackText.value = '';
             showSection(welcomeSection, resultsSection);
         }
     </script>
 </body>
 </html>
+
